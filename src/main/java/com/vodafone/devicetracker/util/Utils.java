@@ -22,14 +22,15 @@ public class Utils {
      */
     public static String[] fromCSV(String csvString) {
         Objects.requireNonNull(csvString, "CSV string cannot be null.");
-        csvString = csvString.strip();
+        csvString = csvString.replace(StringConstants.TAB, StringConstants.SPACE).trim();
 
-        if (csvString == StringConstants.EMPTY_STRING) {
+        if (csvString.equals(StringConstants.EMPTY_STRING)) {
             return EMPTY_STRING_ARRAY;
         }
 
         String[] splits = csvString.split(StringConstants.COMMA, -1);
-        return Stream.of(splits).map(field -> field.strip()).toArray(n -> new String[n]);
+        return Stream.of(splits).map(field -> field.replace(StringConstants.TAB, StringConstants.SPACE).trim())
+                .toArray(n -> new String[n]);
     }
 
     /**
@@ -56,7 +57,7 @@ public class Utils {
      */
     public static boolean isEmptyString(String str) {
         Objects.requireNonNull(str, "String cannot be null");
-        return str.strip().length() == 0;
+        return str.replace(StringConstants.TAB, StringConstants.SPACE).trim().length() == 0;
     }
 
     /**
